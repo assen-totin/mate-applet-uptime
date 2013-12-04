@@ -119,12 +119,23 @@ void get_uptime(UptimeApplet *applet) {
 /* 
  * Format uptime
  */
-void get_uptime(UptimeApplet *applet, char *s) {
-	int h = applet->uptime / 3600;
+void show_uptime(UptimeApplet *applet, char *s) {
+	int d = applet->uptime / 86400;
+	int h = (applet->uptime - d * 86400) / 3600;
 	int m = (applet->uptime - (h * 3600)) / 60;
-	sprintf(s, "%u:%u", h, m);
+	if (d > 0)
+		sprintf(s, "%uD%uH", d, h);
+	else
+		sprintf(s, "%uH%uM", h, m);
 }
 
+/*
+ * Update the applet
+ */
+void applet_check_uptime(UptimeApplet *applet) {
+	get_uptime(applet);
+	show_uptime(applet);
+}
 
 /* The "main" function
  */
@@ -179,6 +190,8 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 
 	g_signal_connect(G_OBJECT(applet_widget), "destroy", G_CALLBACK(applet_destroy), (gpointer)applet);
 	g_signal_connect(G_OBJECT(applet_widget), "change_background", G_CALLBACK (applet_back_change), (gpointer)applet);
+
+	g_timeout_add(60000, (GtkFunction) applet_check_uptime, (gpointer)applet);
 
 	return TRUE;
 }
