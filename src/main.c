@@ -54,7 +54,7 @@ void about_cb (GtkAction *action, UptimeApplet *applet) {
 
         GtkWidget *label = gtk_label_new (&msg1[0]);
 
-        GtkWidget *quitDialog = gtk_dialog_new_with_buttons (_("Keyboard Lock Keys"), GTK_WINDOW(applet), GTK_DIALOG_MODAL, NULL);
+        GtkWidget *quitDialog = gtk_dialog_new_with_buttons (_("Uptime Applet"), GTK_WINDOW(applet), GTK_DIALOG_MODAL, NULL);
         GtkWidget *buttonOK = gtk_dialog_add_button (GTK_DIALOG(quitDialog), GTK_STOCK_OK, GTK_RESPONSE_OK);
 
         gtk_dialog_set_default_response (GTK_DIALOG (quitDialog), GTK_RESPONSE_CANCEL);

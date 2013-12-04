@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Assen Totin
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-applet-lockkeys 0.1.5\n"
-"Report-Msgid-Bugs-To: assen.totin@gmail.com\n"
-"POT-Creation-Date: 2013-02-10 22:58+0200\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-04 21:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,53 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/main.c:153 src/main.c:157
-msgid "Keyboard Lock Keys"
+#: ../src/main.c:53
+msgid "An applet that shows the system uptime"
 msgstr ""
 
-#: src/main.c:153
-msgid ""
-"An applet that shows the state of your Capslock-, Numlock-, and Scroll-lock "
-"keys"
+#: ../src/main.c:53 ../src/main.c:57
+msgid "Uptime Applet"
 msgstr ""
 
-#: src/main.c:153
-msgid "Assen Totin <assen.totin@gmail.com>"
-msgstr ""
-
-#: src/main.c:245
-msgid "Lock Keys Preferences"
-msgstr ""
-
-#: src/main.c:260
-msgid "Settings"
-msgstr ""
-
-#: src/main.c:276
-msgid "Show c_aps-lock"
-msgstr ""
-
-#: src/main.c:278
-msgid "Show _num-lock"
-msgstr ""
-
-#: src/main.c:280
-msgid "Show _scroll-lock"
-msgstr ""
-
-#: src/main.c:411
-msgid "On"
-msgstr ""
-
-#: src/main.c:412
-msgid "Of"
-msgstr ""
-
-#: src/main.c:414
-#, c-format
-msgid "Caps: %s Num: %s Scroll: %s"
-msgstr ""
-
-#: src/main.c:551
-msgid "Could not initialize X Keyboard Extension."
+#: ../src/main.c:175
+msgid "uptime"
 msgstr ""
