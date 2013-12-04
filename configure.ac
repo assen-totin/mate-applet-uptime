@@ -77,7 +77,7 @@ APPLET_LIBS=`$PKG_CONFIG --libs $LIBMATEPANELAPPLET`
 AC_SUBST([APPLET_FLAGS])
 AC_SUBST([APPLET_LIBS])
 
-AC_CONFIG_FILES([Makefile src/Makefile po/Makefile.in po/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile images/Makefile po/Makefile.in po/Makefile])
 
 # Service files
 AC_CONFIG_FILES([src/org.mate.applets.UptimeApplet.mate-panel-applet src/org.mate.panel.applet.UptimeApplet.service mate-applet-uptime.spec])

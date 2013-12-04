@@ -6,7 +6,7 @@
 
 icondir = $(datadir)/icons
 icon_DATA = applet_uptime.png
-EXTRA_DIST += $(icon_DATA)
+EXTRA_DIST = $(icon_DATA)
 
 icons = applet_uptime.16.png applet_uptime.22.png applet_uptime.24.png applet_uptime.32.png
 EXTRA_DIST += $(icons)
