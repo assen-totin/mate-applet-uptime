@@ -28,12 +28,19 @@
 
 typedef struct {
         MatePanelApplet *applet;
-        GtkWidget *vbox, *label_top, label_bottom;
+        GtkWidget *vbox, *label_top, *label_bottom;
 	int uptime;
         GtkDialog *about, *settings;
 } UptimeApplet;
 
+void about_cb (GtkAction *, UptimeApplet *);
+
 static const GtkActionEntry applet_menu_actions [] = {
 	{ "About", GTK_STOCK_ABOUT, NULL, "_About", NULL, G_CALLBACK (about_cb) }
 };
+
+char *ui  =
+"<menuitem name='Item 1' action='Settings' />"
+"<menuitem name='Item 3' action='About' />"
+;
 

@@ -1,23 +1,23 @@
 [Applet Factory]
-Id=LockkeysAppletFactory
-Location=@LIBEXECDIR@/lockkeys_applet
-Name=Keyboard LED Indicator
-Name[en_GB]=Keyboard LED Indicator
-Name[bg_BG]=Индикатор от клавиатурата
-Name[ru_RU]=Индикатор клавиатуры
-Description=Display keyboard LED status
-Description[en_GB]=Display keyboard LED status
-Description[bg_BG]=Показва състоянието на клавиатурата
-Description[ru_RU]=Показывает состояние клавиатуры
+Id=UptimeAppletFactory
+Location=@LIBEXECDIR@/uptime_applet
+Name=Uptime applet
+Name[en_GB]=Uptime applet
+Name[bg_BG]=Индикатор на uptime
+Name[ru_RU]=Индикатор uptime
+Description=Display system uptime
+Description[en_GB]=Display system uptime
+Description[bg_BG]=Показва uptime на машината
+Description[ru_RU]=Показывает uptime
 
-[LockkeysApplet]
-Name=Keyboard LED Indicator
-Name[en_GB]=Keyboard LED Indicator
-Name[bg_BG]=Индикатор от клавиатурата
-Name[ru_RU]=Индикатор клавиатуры
-Description=Display keyboard LED status
-Description[en_GB]=Display keyboard LED status
-Description[bg_BG]=Показва състоянието на клавиатурата
-Description[ru_RU]=Показывает состояние клавиатуры
-Icon=applet_lockkeys
-MateComponentId=OAFIID:MATE_LockkeysApplet
+[UptimeApplet]
+Name=Uptime applet
+Name[en_GB]=Uptime applet
+Name[bg_BG]=Индикатор на uptime
+Name[ru_RU]=Индикатор uptime
+Description=Display system uptime
+Description[en_GB]=Display system uptime
+Description[bg_BG]=Показва uptime на машината
+Description[ru_RU]=Показывает uptime
+Icon=applet_uptime
+MateComponentId=OAFIID:MATE_UptimeApplet

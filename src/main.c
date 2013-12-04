@@ -32,7 +32,7 @@
 /* Free the memory of the applet struct
  * Save the current state of the applet
  */
-static void applet_destroy(MatePanelApplet *applet_widget, UptimeApplet *applet) {
+void applet_destroy(MatePanelApplet *applet_widget, UptimeApplet *applet) {
 	g_assert(applet);
 	g_free(applet);
 	return;
@@ -41,13 +41,13 @@ static void applet_destroy(MatePanelApplet *applet_widget, UptimeApplet *applet)
 /* Just a boring about box
  */
 
-static void quitDialogOK( GtkWidget *widget, gpointer data ){
+void quitDialogOK( GtkWidget *widget, gpointer data ){
         GtkWidget *quitDialog = data;
         gtk_widget_destroy(quitDialog);
 }
 
 
-static void about_cb (GtkAction *action, UptimeApplet *applet) {
+void about_cb (GtkAction *action, UptimeApplet *applet) {
 	char msg1[1024];
 
 	sprintf(&msg1[0], "%s\n\n%s\n\n%s", _("Uptime Applet"), _("An applet that shows the system uptime"), ("Assen Totin <assen.totin@gmail.com>"));
@@ -65,7 +65,7 @@ static void about_cb (GtkAction *action, UptimeApplet *applet) {
 }
 
 
-static void applet_back_change (MatePanelApplet *a, MatePanelAppletBackgroundType type, GdkColor *color, GdkPixmap *pixmap, UptimeApplet *applet) {
+void applet_back_change (MatePanelApplet *a, MatePanelAppletBackgroundType type, GdkColor *color, GdkPixmap *pixmap, UptimeApplet *applet) {
         /* taken from the TrashApplet */
         GtkRcStyle *rc_style;
         GtkStyle *style;
@@ -105,7 +105,7 @@ static void applet_back_change (MatePanelApplet *a, MatePanelAppletBackgroundTyp
 void get_uptime(UptimeApplet *applet) {
 	FILE *fp = fopen(APPLET_PROC_UPTIME, "r");
 	if (!fp)
-		return "0:0";
+		return;
 	char tmp1[32];
 	fgets(&tmp1[0], sizeof(tmp1), fp);
 	fclose(fp);
@@ -119,7 +119,7 @@ void get_uptime(UptimeApplet *applet) {
 /* 
  * Format uptime
  */
-void show_uptime(UptimeApplet *applet, char *s) {
+void format_uptime(UptimeApplet *applet, char *s) {
 	int d = applet->uptime / 86400;
 	int h = (applet->uptime - d * 86400) / 3600;
 	int m = (applet->uptime - (h * 3600)) / 60;
@@ -134,7 +134,9 @@ void show_uptime(UptimeApplet *applet, char *s) {
  */
 void applet_check_uptime(UptimeApplet *applet) {
 	get_uptime(applet);
-	show_uptime(applet);
+	char uptime[32]; 
+	format_uptime(applet, &uptime[0]);
+	gtk_label_set_text(GTK_LABEL(applet->label_bottom), &uptime[0]);
 }
 
 /* The "main" function
@@ -182,9 +184,9 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 	gtk_container_add(GTK_CONTAINER(applet_widget), applet->vbox);
 
         GtkActionGroup *action_group = gtk_action_group_new ("Lockkeys Applet Actions");
-        gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+        //gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
         gtk_action_group_add_actions (action_group, applet_menu_actions, G_N_ELEMENTS (applet_menu_actions), applet);
-	//mate_panel_applet_setup_menu_from_file(applet->applet, "/usr/share/mate-2.0/ui/lockkeys-applet-menu.xml", action_group);
+	mate_panel_applet_setup_menu(applet->applet, ui, action_group);
 
 	gtk_widget_show_all(GTK_WIDGET(applet_widget));
 
