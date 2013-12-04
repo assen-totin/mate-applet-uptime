@@ -124,9 +124,9 @@ void format_uptime(UptimeApplet *applet, char *s) {
 	int h = (applet->uptime - d * 86400) / 3600;
 	int m = (applet->uptime - (h * 3600)) / 60;
 	if (d > 0)
-		sprintf(s, "%uD%uH", d, h);
+		sprintf(s, "%s%uD%02uH%s", "<span font_desc=\"10.0\">", d, h, "</span>");
 	else
-		sprintf(s, "%uH%uM", h, m);
+		sprintf(s, "%s%02uH%02uM%s", "<span font_desc=\"10.0\">", h, m, "</span>");
 }
 
 /*
@@ -136,7 +136,7 @@ void applet_check_uptime(UptimeApplet *applet) {
 	get_uptime(applet);
 	char uptime[32]; 
 	format_uptime(applet, &uptime[0]);
-	gtk_label_set_text(GTK_LABEL(applet->label_bottom), &uptime[0]);
+	gtk_label_set_markup(GTK_LABEL(applet->label_bottom), &uptime[0]);
 }
 
 /* The "main" function
@@ -171,12 +171,16 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 	
 	applet->vbox = gtk_vbox_new(FALSE, 0);
 
-	applet->label_top = gtk_label_new (_("uptime"));
+	char msg_top[32];
+	sprintf(&msg_top[0], "%s%s%s", "<span font_desc=\"8.0\">", _("uptime"), "</span>");
+	applet->label_top = gtk_label_new("");
+	gtk_label_set_markup(GTK_LABEL(applet->label_top), &msg_top[0]);
 
 	char msg_bottom[32];
 	get_uptime(applet);
 	format_uptime(applet, &msg_bottom[0]);
-	applet->label_bottom = gtk_label_new (&msg_bottom[0]);
+	applet->label_bottom = gtk_label_new("");
+	gtk_label_set_markup(GTK_LABEL(applet->label_bottom), &msg_bottom[0]);
 
 	gtk_box_pack_start(GTK_BOX(applet->vbox), applet->label_top, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(applet->vbox), applet->label_bottom, FALSE, FALSE, 0);

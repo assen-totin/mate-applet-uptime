@@ -40,7 +40,6 @@ static const GtkActionEntry applet_menu_actions [] = {
 };
 
 char *ui  =
-"<menuitem name='Item 1' action='Settings' />"
-"<menuitem name='Item 3' action='About' />"
+"<menuitem name='Item 1' action='About' />"
 ;
 
