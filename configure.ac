@@ -80,7 +80,7 @@ AC_SUBST([APPLET_LIBS])
 AC_CONFIG_FILES([Makefile src/Makefile images/Makefile po/Makefile.in po/Makefile])
 
 # Service files
-AC_CONFIG_FILES([src/org.mate.applets.UptimeApplet.mate-panel-applet src/org.mate.panel.applet.UptimeApplet.service mate-applet-uptime.spec])
+AC_CONFIG_FILES([src/org.mate.applets.UptimeApplet.mate-panel-applet src/org.mate.panel.applet.UptimeApplet.service src/org.mate.panel.applet.UptimeApplet.gschema.xml mate-applet-uptime.spec])
 
 # Icons
 AC_DEFINE_UNQUOTED([APPLET_ICON_PATH], ["$PIXMAPDIR"], [Define icons location])

@@ -18,6 +18,13 @@
  *  
  */
 
+#include <mate-panel-applet.h>
+#include <libintl.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define _(String) gettext (String)
+
 #define APPLET_FACTORY "UptimeAppletFactory"
 #define APPLET_ID "UptimeApplet"
 #define APPLET_NAME "uptime"
@@ -26,20 +33,36 @@
 
 #define APPLET_PROC_UPTIME "/proc/uptime"
 
+// GSettings
+#define APPLET_GSETTINGS_SCHEMA "org.mate.panel.applet.UptimeApplet"
+#define APPLET_GSETTINGS_PATH "/org/mate/panel/objects/uptime/"
+#define APPLET_GSETTINGS_KEY_FORMAT "format"
+
+enum {
+	FORMAT_UPPERCASE = 0,
+	FORMAT_LOWERCASE,
+	FORMAT_CLOCK,
+	NUM_FORMATS
+};
+
 typedef struct {
         MatePanelApplet *applet;
         GtkWidget *vbox, *label_top, *label_bottom;
-	int uptime;
+	int uptime, format;
         GtkDialog *about, *settings;
+	GSettings *gsettings;
 } UptimeApplet;
 
 void about_cb (GtkAction *, UptimeApplet *);
+void settings_cb (GtkAction *, UptimeApplet *);
 
 static const GtkActionEntry applet_menu_actions [] = {
-	{ "About", GTK_STOCK_ABOUT, NULL, "_About", NULL, G_CALLBACK (about_cb) }
+	{ "Settings", GTK_STOCK_EXECUTE, "_Settings", NULL, NULL, G_CALLBACK (settings_cb) },
+	{ "About", GTK_STOCK_ABOUT, "_About", NULL, NULL, G_CALLBACK (about_cb) }
 };
 
-char *ui  =
-"<menuitem name='Item 1' action='About' />"
+static char *ui  =
+"<menuitem name='Item 1' action='Settings' />"
+"<menuitem name='Item 2' action='About' />"
 ;
 

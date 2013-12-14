@@ -19,15 +19,8 @@
  *
  */
 
-#include <mate-panel-applet.h>
-#include <libintl.h>
-#include <string.h>
-
-#include "../config.h"
 #include "applet.h"
-
-#define _(String) gettext (String)
-
+#include "../config.h"
 
 /* Free the memory of the applet struct
  * Save the current state of the applet
@@ -36,32 +29,6 @@ void applet_destroy(MatePanelApplet *applet_widget, UptimeApplet *applet) {
 	g_assert(applet);
 	g_free(applet);
 	return;
-}
-
-/* Just a boring about box
- */
-
-void quitDialogOK( GtkWidget *widget, gpointer data ){
-        GtkWidget *quitDialog = data;
-        gtk_widget_destroy(quitDialog);
-}
-
-
-void about_cb (GtkAction *action, UptimeApplet *applet) {
-	char msg1[1024];
-
-	sprintf(&msg1[0], "%s\n\n%s\n\n%s", _("Uptime Applet"), _("An applet that shows the system uptime"), ("Assen Totin <assen.totin@gmail.com>"));
-
-        GtkWidget *label = gtk_label_new (&msg1[0]);
-
-        GtkWidget *quitDialog = gtk_dialog_new_with_buttons (_("Uptime Applet"), GTK_WINDOW(applet), GTK_DIALOG_MODAL, NULL);
-        GtkWidget *buttonOK = gtk_dialog_add_button (GTK_DIALOG(quitDialog), GTK_STOCK_OK, GTK_RESPONSE_OK);
-
-        gtk_dialog_set_default_response (GTK_DIALOG (quitDialog), GTK_RESPONSE_CANCEL);
-        gtk_container_add (GTK_CONTAINER (GTK_DIALOG(quitDialog)->vbox), label);
-        g_signal_connect (G_OBJECT(buttonOK), "clicked", G_CALLBACK (quitDialogOK), (gpointer) quitDialog);
-
-        gtk_widget_show_all (GTK_WIDGET(quitDialog));
 }
 
 
@@ -106,7 +73,7 @@ void get_uptime(UptimeApplet *applet) {
 	FILE *fp = fopen(APPLET_PROC_UPTIME, "r");
 	if (!fp)
 		return;
-	char tmp1[32];
+	char tmp1[128];
 	fgets(&tmp1[0], sizeof(tmp1), fp);
 	fclose(fp);
 	
@@ -119,14 +86,36 @@ void get_uptime(UptimeApplet *applet) {
 /* 
  * Format uptime
  */
-void format_uptime(UptimeApplet *applet, char *s) {
+void format_uptime(UptimeApplet *applet, char *s, char *t) {
 	int d = applet->uptime / 86400;
 	int h = (applet->uptime - d * 86400) / 3600;
 	int m = (applet->uptime - (h * 3600)) / 60;
-	if (d > 0)
-		sprintf(s, "%s%uD%02uH%s", "<span font_desc=\"10.0\">", d, h, "</span>");
-	else
-		sprintf(s, "%s%02uH%02uM%s", "<span font_desc=\"10.0\">", h, m, "</span>");
+
+	switch(applet->format) {
+		case FORMAT_UPPERCASE :
+			if (d > 0)
+				sprintf(s, "%s%uD%02uH%s", "<span font_desc=\"10.0\">", d, h, "</span>");
+			else
+				sprintf(s, "%s%02uH%02uM%s", "<span font_desc=\"10.0\">", h, m, "</span>");
+			break;
+		case FORMAT_LOWERCASE :
+			if (d > 0)
+				sprintf(s, "%s%ud%02uh%s", "<span font_desc=\"10.0\">", d, h, "</span>");
+			else
+				sprintf(s, "%s%02uh%02um%s", "<span font_desc=\"10.0\">", h, m, "</span>");
+			break;
+		case FORMAT_CLOCK :
+			sprintf(s, "%s%02u.%02u:%02u%s", "<span font_desc=\"10.0\">", d, h, m, "</span>");
+  			break;
+		default :
+			// Same as FORMAT_UPPERCASE
+			if (d > 0)
+				sprintf(s, "%s%uD%02uH%s", "<span font_desc=\"10.0\">", d, h, "</span>");
+			else
+				sprintf(s, "%s%02uH%02uM%s", "<span font_desc=\"10.0\">", h, m, "</span>");
+	}
+
+	sprintf(t, "%s %u %s, %u %s, %u %s", _("System uptime:"), d, _("days"), h, _("hours"), m, _("minutes"));
 }
 
 /*
@@ -134,9 +123,11 @@ void format_uptime(UptimeApplet *applet, char *s) {
  */
 void applet_check_uptime(UptimeApplet *applet) {
 	get_uptime(applet);
-	char uptime[32]; 
-	format_uptime(applet, &uptime[0]);
+	char uptime[128], tooltip[1024]; 
+
+	format_uptime(applet, &uptime[0], &tooltip[0]);
 	gtk_label_set_markup(GTK_LABEL(applet->label_bottom), &uptime[0]);
+	gtk_widget_set_tooltip_text (GTK_WIDGET (applet->applet), &tooltip[0]);
 }
 
 /* The "main" function
@@ -168,19 +159,23 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 */	
 	applet = g_malloc0(sizeof(UptimeApplet));
 	applet->applet = applet_widget;
+
+	applet->gsettings = g_settings_new_with_path(APPLET_GSETTINGS_SCHEMA, APPLET_GSETTINGS_PATH);
+	applet->format = g_settings_get_int(applet->gsettings, APPLET_GSETTINGS_KEY_FORMAT);
 	
 	applet->vbox = gtk_vbox_new(FALSE, 0);
 
-	char msg_top[32];
+	char msg_top[128];
 	sprintf(&msg_top[0], "%s%s%s", "<span font_desc=\"8.0\">", _("uptime"), "</span>");
 	applet->label_top = gtk_label_new("");
 	gtk_label_set_markup(GTK_LABEL(applet->label_top), &msg_top[0]);
 
-	char msg_bottom[32];
+	char msg_bottom[128], tooltip[1024];
 	get_uptime(applet);
-	format_uptime(applet, &msg_bottom[0]);
+	format_uptime(applet, &msg_bottom[0], &tooltip[0]);
 	applet->label_bottom = gtk_label_new("");
 	gtk_label_set_markup(GTK_LABEL(applet->label_bottom), &msg_bottom[0]);
+	gtk_widget_set_tooltip_text (GTK_WIDGET (applet->applet), &tooltip[0]);
 
 	gtk_box_pack_start(GTK_BOX(applet->vbox), applet->label_top, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(applet->vbox), applet->label_bottom, FALSE, FALSE, 0);

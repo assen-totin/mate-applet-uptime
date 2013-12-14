@@ -12,11 +12,17 @@ LDADD = @GTK_LIBS@ @APPLET_LIBS@
 
 libexec_PROGRAMS = uptime_applet 
 
-uptime_applet_SOURCES = main.c applet.h 
+uptime_applet_SOURCES = main.c menu.c applet.h 
 
 appletdir = $(datadir)/mate-panel/applets
 applet_DATA = org.mate.applets.UptimeApplet.mate-panel-applet
 
 servicedir = $(datadir)/dbus-1/services
 service_DATA = org.mate.panel.applet.UptimeApplet.service
+
+gsettingsdir = $(datadir)/glib-2.0/schemas
+gsettings_DATA = org.mate.panel.applet.UptimeApplet.gschema.xml
+
+install-data-hook:
+	glib-compile-schemas $(DESTDIR)$(datadir)/glib-2.0/schemas 2>/dev/null
 

@@ -1,0 +1,9 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+  <schema id="org.mate.panel.applet.UptimeApplet">
+    <key name="format" type="i">
+      <default>0</default>
+      <summary>Format to use in Uptime applet</summary>
+      <description>ID of the format to use in Uptime applet</description>
+    </key>
+  </schema>
+</schemalist>
