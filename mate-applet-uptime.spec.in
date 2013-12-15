@@ -65,5 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 @DATAROOTDIR@/dbus-1/services/org.mate.panel.applet.UptimeApplet.service
 
 %changelog
+* Sun Dec 15 2013 Assen Totin <assen.totin@gmail.com>
+- Release 0.0.2
+
 * Wed Dec 4 2013 Assen Totin <assen.totin@gmail.com>
 - Release 0.0.1

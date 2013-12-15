@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-04 21:45+0200\n"
-"PO-Revision-Date: 2013-12-04 21:47+0200\n"
+"POT-Creation-Date: 2013-12-15 12:54+0200\n"
+"PO-Revision-Date: 2013-12-15 12:57+0200\n"
 "Last-Translator: root <assen.totin@gmail.com>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg\n"
@@ -18,14 +18,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/main.c:53
+#: ../src/menu.c:34
 msgid "An applet that shows the system uptime"
-msgstr "Аплет за показване на uptime"
+msgstr "Аплет, показващ времето от пускането на системата"
 
-#: ../src/main.c:53 ../src/main.c:57
+#: ../src/menu.c:79
+msgid "Choose output format"
+msgstr "Изберете формат на времето"
+
+#: ../src/main.c:118
+msgid "System uptime:"
+msgstr "Време по стартирането:"
+
+#: ../src/menu.c:34 ../src/menu.c:38
 msgid "Uptime Applet"
-msgstr "Uptime Applet"
+msgstr "Аплет за време от стартирането"
 
-#: ../src/main.c:175
+#: ../src/menu.c:100
+msgid "Uptime Applet Settings"
+msgstr "Настройки на аплета за време от стартирането"
+
+#: ../src/main.c:118
+msgid "days"
+msgstr "дни"
+
+#: ../src/main.c:118
+msgid "hours"
+msgstr "часа"
+
+#: ../src/main.c:118
+msgid "minutes"
+msgstr "минути"
+
+#: ../src/main.c:169
 msgid "uptime"
-msgstr "uptime"
+msgstr "от старт"

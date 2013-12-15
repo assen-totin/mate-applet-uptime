@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-04 21:45+0200\n"
+"POT-Creation-Date: 2013-12-15 12:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/main.c:53
+#: ../src/menu.c:34
 msgid "An applet that shows the system uptime"
 msgstr ""
 
-#: ../src/main.c:53 ../src/main.c:57
+#: ../src/menu.c:79
+msgid "Choose output format"
+msgstr ""
+
+#: ../src/main.c:118
+msgid "System uptime:"
+msgstr ""
+
+#: ../src/menu.c:34 ../src/menu.c:38
 msgid "Uptime Applet"
 msgstr ""
 
-#: ../src/main.c:175
+#: ../src/menu.c:100
+msgid "Uptime Applet Settings"
+msgstr ""
+
+#: ../src/main.c:118
+msgid "days"
+msgstr ""
+
+#: ../src/main.c:118
+msgid "hours"
+msgstr ""
+
+#: ../src/main.c:118
+msgid "minutes"
+msgstr ""
+
+#: ../src/main.c:169
 msgid "uptime"
 msgstr ""
