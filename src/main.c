@@ -14,8 +14,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, 
  *  USA.
  *
- *  Lock Keys (formerly Led) Applet was writen by Jörgen Scheibengruber <mfcn@gmx.de>
- *  Modifed for MATE by Assen Totin <assen.totin@gmail.com>
+ *  Uptime applet for MATE by Assen Totin <assen.totin@gmail.com>
  *
  */
 
@@ -182,7 +181,7 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 	
 	gtk_container_add(GTK_CONTAINER(applet_widget), applet->vbox);
 
-        GtkActionGroup *action_group = gtk_action_group_new ("Lockkeys Applet Actions");
+        GtkActionGroup *action_group = gtk_action_group_new ("Uptime Applet Actions");
         //gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
         gtk_action_group_add_actions (action_group, applet_menu_actions, G_N_ELEMENTS (applet_menu_actions), applet);
 	mate_panel_applet_setup_menu(applet->applet, ui, action_group);
