@@ -57,12 +57,12 @@ void about_cb (GtkAction *, UptimeApplet *);
 void settings_cb (GtkAction *, UptimeApplet *);
 
 static const GtkActionEntry applet_menu_actions [] = {
-	{ "Settings", GTK_STOCK_PROPERTIES, NULL, NULL, NULL, G_CALLBACK (settings_cb) },
+	{ "Properties", GTK_STOCK_PROPERTIES, NULL, NULL, NULL, G_CALLBACK (settings_cb) },
 	{ "About", GTK_STOCK_ABOUT, NULL, NULL, NULL, G_CALLBACK (about_cb) }
 };
 
 static char *ui  =
-"<menuitem name='Item 1' action='Settings' />"
+"<menuitem name='Item 1' action='Properties' />"
 "<menuitem name='Item 2' action='About' />"
 ;
 
