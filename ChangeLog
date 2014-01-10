@@ -1,14 +1,18 @@
+Jan 10 2014 - Version 0.0.4
+===========================
+* Updated menu translations.
+
 Dec 23, 2013 - Version 0.0.3
 ============================
-* Fixed missing XML schema Gettext domain
-* Updated menu labels
+* Fixed missing XML schema Gettext domain.
+* Updated menu labels.
 
 Dec 15, 2013 - Version 0.0.2
 ============================
-* Added Settings menu to chose the display format
-* Added tooltip with full uptime string
+* Added Settings menu to chose the display format.
+* Added tooltip with full uptime string.
 
-Dec 04, 2013 - Version 0.0.1
+Dec 4, 2013 - Version 0.0.1
 ============================
 * Initial release.
 
