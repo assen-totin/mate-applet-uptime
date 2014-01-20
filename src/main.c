@@ -88,7 +88,7 @@ void get_uptime(UptimeApplet *applet) {
 void format_uptime(UptimeApplet *applet, char *s, char *t) {
 	int d = applet->uptime / 86400;
 	int h = (applet->uptime - d * 86400) / 3600;
-	int m = (applet->uptime - (h * 3600)) / 60;
+	int m = (applet->uptime - (d * 86400) - (h * 3600)) / 60;
 
 	switch(applet->format) {
 		case FORMAT_UPPERCASE :

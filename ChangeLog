@@ -1,3 +1,7 @@
+Jan 24 2014 - Version 0.0.5
+===========================
+* Fixed minute calculation when uptime exceeds 1 day.
+
 Jan 10 2014 - Version 0.0.4
 ===========================
 * Updated menu translations.
