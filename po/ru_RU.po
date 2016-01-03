@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-15 12:54+0200\n"
+"POT-Creation-Date: 2016-01-03 16:36+0200\n"
 "PO-Revision-Date: 2013-12-15 12:58+0200\n"
 "Last-Translator: root <assen.totin@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -19,38 +19,54 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../src/menu.c:34
+#: src/applet.h:61
+msgid "About"
+msgstr ""
+
+#: src/menu.c:45
 msgid "An applet that shows the system uptime"
 msgstr "Программа, показывающяя время с запуска"
 
-#: ../src/menu.c:79
+#: src/menu.c:89
 msgid "Choose output format"
 msgstr "Выберите формат времени"
 
-#: ../src/main.c:118
+#: src/menu.c:48
+msgid "Home page"
+msgstr "Домашняя страница"
+
+#: src/applet.h:60
+msgid "Settings"
+msgstr "Настройки"
+
+#: src/main.c:117
 msgid "System uptime:"
 msgstr "Время с запуска"
 
-#: ../src/menu.c:34 ../src/menu.c:38
+#: src/menu.c:34
 msgid "Uptime Applet"
 msgstr "Время с запуска"
 
-#: ../src/menu.c:100
+#: src/menu.c:110
 msgid "Uptime Applet Settings"
 msgstr "Настройки времени с запуска"
 
-#: ../src/main.c:118
+#: src/main.c:117
 msgid "days"
 msgstr "дней"
 
-#: ../src/main.c:118
+#: src/main.c:117
 msgid "hours"
 msgstr "часов"
 
-#: ../src/main.c:118
+#: src/main.c:117
 msgid "minutes"
 msgstr "минут"
 
-#: ../src/main.c:169
+#: src/menu.c:43
+msgid "translator-credits"
+msgstr ""
+
+#: src/main.c:168
 msgid "uptime"
 msgstr "с запуска"

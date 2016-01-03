@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-15 12:54+0200\n"
+"POT-Creation-Date: 2016-01-03 16:36+0200\n"
 "PO-Revision-Date: 2013-12-15 12:56+0200\n"
 "Last-Translator: root <assen.totin@gmail.com>\n"
 "Language-Team: English (British)\n"
@@ -17,38 +17,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/menu.c:34
+#: src/applet.h:61
+msgid "About"
+msgstr ""
+
+#: src/menu.c:45
 msgid "An applet that shows the system uptime"
 msgstr "An applet that shows the system uptime"
 
-#: ../src/menu.c:79
+#: src/menu.c:89
 msgid "Choose output format"
 msgstr "Choose output format"
 
-#: ../src/main.c:118
+#: src/menu.c:48
+msgid "Home page"
+msgstr "Home page"
+
+#: src/applet.h:60
+msgid "Settings"
+msgstr "Settings"
+
+#: src/main.c:117
 msgid "System uptime:"
 msgstr "System uptime:"
 
-#: ../src/menu.c:34 ../src/menu.c:38
+#: src/menu.c:34
 msgid "Uptime Applet"
 msgstr "Uptime Applet"
 
-#: ../src/menu.c:100
+#: src/menu.c:110
 msgid "Uptime Applet Settings"
 msgstr "Uptime Applet Settings"
 
-#: ../src/main.c:118
+#: src/main.c:117
 msgid "days"
 msgstr "days"
 
-#: ../src/main.c:118
+#: src/main.c:117
 msgid "hours"
 msgstr "hours"
 
-#: ../src/main.c:118
+#: src/main.c:117
 msgid "minutes"
 msgstr "minutes"
 
-#: ../src/main.c:169
+#: src/menu.c:43
+msgid "translator-credits"
+msgstr ""
+
+#: src/main.c:168
 msgid "uptime"
 msgstr "uptime"

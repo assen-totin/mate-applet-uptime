@@ -1,3 +1,7 @@
+Jan 3 2016 - Version 0.1.0
+===========================
+* Added GTK3 support.
+
 Jan 24 2014 - Version 0.0.5
 ===========================
 * Fixed minute calculation when uptime exceeds 1 day.

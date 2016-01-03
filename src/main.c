@@ -31,36 +31,15 @@ void applet_destroy(MatePanelApplet *applet_widget, UptimeApplet *applet) {
 }
 
 
+#ifdef HAVE_GTK2
 void applet_back_change (MatePanelApplet *a, MatePanelAppletBackgroundType type, GdkColor *color, GdkPixmap *pixmap, UptimeApplet *applet) {
-        /* taken from the TrashApplet */
-        GtkRcStyle *rc_style;
-        GtkStyle *style;
+#elif HAVE_GTK3
+void applet_back_change (MatePanelApplet *a, MatePanelAppletBackgroundType type, GdkRGBA *color, cairo_pattern_t *pattern, UptimeApplet *applet) {
+#endif
 
-        /* reset style */
-        gtk_widget_set_style (GTK_WIDGET (applet->applet), NULL);
-        rc_style = gtk_rc_style_new ();
-        gtk_widget_modify_style (GTK_WIDGET (applet->applet), rc_style);
-        g_object_unref (rc_style);
-
-        switch (type) {
-                case PANEL_COLOR_BACKGROUND:
-                        gtk_widget_modify_bg (GTK_WIDGET (applet->applet), GTK_STATE_NORMAL, color);
-                        break;
-
-                case PANEL_PIXMAP_BACKGROUND:
-                        style = gtk_style_copy (gtk_widget_get_style (GTK_WIDGET (applet->applet)));
-                        if (style->bg_pixmap[GTK_STATE_NORMAL])
-                                g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-                        style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref(pixmap);
-                        gtk_widget_set_style (GTK_WIDGET (applet->applet), style);
-                        g_object_unref (style);
-                        break;
-
-                case PANEL_NO_BACKGROUND:
-                default:
-                        break;
-        }
-
+	// Use MATE-provided wrapper to change the background (same for both GTK2 and GTK3)
+	mate_panel_applet_set_background_widget (a, GTK_WIDGET(applet->applet));
+	//mate_panel_applet_set_background_widget (a, GTK_WIDGET(applet->event_box));
 }
 
 
@@ -132,7 +111,6 @@ void applet_check_uptime(UptimeApplet *applet) {
 /* The "main" function
  */
 static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gchar *iid, gpointer data) {
-	GdkDrawable *drawable;
 	char *buf;
 	UptimeApplet *applet;
 	GdkPixbuf *icon;
@@ -142,15 +120,15 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 		return FALSE;
 
 	// i18n
-        setlocale (LC_ALL, "");
-        bindtextdomain (PACKAGE_NAME, LOCALEDIR);
-        bind_textdomain_codeset(PACKAGE_NAME, "utf-8");
-        textdomain (PACKAGE_NAME);
+	setlocale (LC_ALL, "");
+	bindtextdomain (PACKAGE_NAME, LOCALEDIR);
+	bind_textdomain_codeset(PACKAGE_NAME, "utf-8");
+	textdomain (PACKAGE_NAME);
 
 	/* Set an icon for all windows */
 /*
 	char image_file[1024];
-        sprintf(&image_file[0], "%s/%s", APPLET_ICON_PATH, APPLET_ICON);
+	sprintf(&image_file[0], "%s/%s", APPLET_ICON_PATH, APPLET_ICON);
 	icon = gdk_pixbuf_new_from_file(&image_file[0], NULL);
 	iconlist = g_list_append(NULL, (gpointer)icon);
 	gtk_window_set_default_icon_list(iconlist);
@@ -162,7 +140,11 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 	applet->gsettings = g_settings_new_with_path(APPLET_GSETTINGS_SCHEMA, APPLET_GSETTINGS_PATH);
 	applet->format = g_settings_get_int(applet->gsettings, APPLET_GSETTINGS_KEY_FORMAT);
 	
-	applet->vbox = gtk_vbox_new(FALSE, 0);
+#ifdef HAVE_GTK2
+	applet->vbox = gtk_vbox_new (FALSE, 0);
+#elif HAVE_GTK3
+	applet->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#endif
 
 	char msg_top[128];
 	sprintf(&msg_top[0], "%s%s%s", "<span font_desc=\"8.0\">", _("uptime"), "</span>");
@@ -181,9 +163,9 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 	
 	gtk_container_add(GTK_CONTAINER(applet_widget), applet->vbox);
 
-        GtkActionGroup *action_group = gtk_action_group_new ("Uptime Applet Actions");
-        //gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-        gtk_action_group_add_actions (action_group, applet_menu_actions, G_N_ELEMENTS (applet_menu_actions), applet);
+	GtkActionGroup *action_group = gtk_action_group_new ("Uptime Applet Actions");
+	gtk_action_group_set_translation_domain(action_group, PACKAGE_NAME);
+	gtk_action_group_add_actions (action_group, applet_menu_actions, G_N_ELEMENTS (applet_menu_actions), applet);
 	mate_panel_applet_setup_menu(applet->applet, ui, action_group);
 
 	gtk_widget_show_all(GTK_WIDGET(applet_widget));
@@ -191,7 +173,11 @@ static gboolean uptime_applet_factory(MatePanelApplet *applet_widget, const gcha
 	g_signal_connect(G_OBJECT(applet_widget), "destroy", G_CALLBACK(applet_destroy), (gpointer)applet);
 	g_signal_connect(G_OBJECT(applet_widget), "change_background", G_CALLBACK (applet_back_change), (gpointer)applet);
 
+#ifdef HAVE_GTK2
 	g_timeout_add(60000, (GtkFunction) applet_check_uptime, (gpointer)applet);
+#elif HAVE_GTK3
+	g_timeout_add(60000, (GSourceFunc) applet_check_uptime, (gpointer)applet);
+#endif
 
 	return TRUE;
 }

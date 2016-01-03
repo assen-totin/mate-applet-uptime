@@ -23,34 +23,44 @@
 
 
 void quitDialogOK( GtkWidget *widget, gpointer data ){
-        GtkWidget *quitDialog = data;
-        gtk_widget_destroy(quitDialog);
+	GtkWidget *quitDialog = data;
+	gtk_widget_destroy(quitDialog);
 }
 
 
 void about_cb (GtkAction *action, UptimeApplet *applet) {
-        char msg1[1024];
+	GtkWidget *about = gtk_about_dialog_new();
 
-        sprintf(&msg1[0], "%s\n\n%s\n\n%s", _("Uptime Applet"), _("An applet that shows the system uptime"), ("Assen Totin <assen.totin@gmail.com>"));
+	gtk_about_dialog_set_program_name (GTK_ABOUT_DIALOG(about), _("Uptime Applet"));
 
-        GtkWidget *label = gtk_label_new (&msg1[0]);
+	gtk_about_dialog_set_version (GTK_ABOUT_DIALOG(about), VERSION);
 
-        GtkWidget *quitDialog = gtk_dialog_new_with_buttons (_("Uptime Applet"), GTK_WINDOW(applet), GTK_DIALOG_MODAL, NULL);
-        GtkWidget *buttonOK = gtk_dialog_add_button (GTK_DIALOG(quitDialog), GTK_STOCK_OK, GTK_RESPONSE_OK);
+	gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG(about), "Copyleft 2014-1026. See License for details.");
 
-        gtk_dialog_set_default_response (GTK_DIALOG (quitDialog), GTK_RESPONSE_CANCEL);
-        gtk_container_add (GTK_CONTAINER (GTK_DIALOG(quitDialog)->vbox), label);
-        g_signal_connect (G_OBJECT(buttonOK), "clicked", G_CALLBACK (quitDialogOK), (gpointer) quitDialog);
+	const gchar *authors = "Assen Totin <assen.totin@gmail.com>";
+	gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG(about),  &authors);
 
-        gtk_widget_show_all (GTK_WIDGET(quitDialog));
+	gtk_about_dialog_set_translator_credits(GTK_ABOUT_DIALOG(about), _("translator-credits"));
+
+	gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG(about), _("An applet that shows the system uptime"));
+
+	gtk_about_dialog_set_website (GTK_ABOUT_DIALOG(about), "http://www.zavedil.com/software-uptime-applet");
+	gtk_about_dialog_set_website_label (GTK_ABOUT_DIALOG(about), _("Home page"));
+
+	char image_file[1024];
+	snprintf(&image_file[0], 1023, "%s/%s", APPLET_ICON_PATH, "applet_uptime.32.png");
+	gtk_about_dialog_set_logo (GTK_ABOUT_DIALOG(about), gtk_image_get_pixbuf(GTK_IMAGE(gtk_image_new_from_file (image_file))));
+
+#ifdef HAVE_GTK2
+	gtk_about_dialog_set_license (GTK_ABOUT_DIALOG(about), "GPL v. 2 or later");
+#elif HAVE_GTK3
+	gtk_about_dialog_set_license_type (GTK_ABOUT_DIALOG(about), GTK_LICENSE_GPL_2_0);
+#endif
+
+	gtk_dialog_run (GTK_DIALOG(about));
+	gtk_widget_destroy(about);
 }
 
-/*
-void quitDialogClose(GtkWidget *widget, gpointer data) {
-	livescore_applet *applet = data;
-	gtk_widget_destroy(applet->dialog_settings);
-}
-*/
 
 void settings_cb_action(GtkWidget *widget, gpointer data) {
         UptimeApplet *applet = data;
@@ -92,7 +102,13 @@ void settings_cb (GtkAction *action, UptimeApplet *applet) {
 
 	g_signal_connect (G_OBJECT(format_combo), "changed", G_CALLBACK (settings_cb_action), (gpointer) applet);
 
-	GtkWidget *format_vbox_1 = gtk_vbox_new (FALSE, 0);
+	GtkWidget *format_vbox_1;
+#ifdef HAVE_GTK2
+	format_vbox_1 = gtk_vbox_new (FALSE, 0);
+#elif HAVE_GTK3
+	format_vbox_1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#endif
+
 	gtk_box_pack_start(GTK_BOX(format_vbox_1), format_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(format_vbox_1), format_combo, FALSE, FALSE, 0);
 
@@ -101,7 +117,13 @@ void settings_cb (GtkAction *action, UptimeApplet *applet) {
 	GtkWidget *buttonClose = gtk_dialog_add_button (GTK_DIALOG(quitDialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CANCEL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (quitDialog), GTK_RESPONSE_CANCEL);
+
+#ifdef HAVE_GTK2
 	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(quitDialog)->vbox), format_vbox_1);
+#elif HAVE_GTK3
+	gtk_container_add (GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(quitDialog))), format_vbox_1);
+#endif
+
 	g_signal_connect (G_OBJECT(buttonClose), "clicked", G_CALLBACK (quitDialogOK), (gpointer) quitDialog);
 
 	gtk_widget_show_all(GTK_WIDGET(quitDialog));

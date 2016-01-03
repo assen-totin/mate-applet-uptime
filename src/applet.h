@@ -22,8 +22,7 @@
 #include <libintl.h>
 #include <string.h>
 #include <stdlib.h>
-
-#define _(String) gettext (String)
+#include <glib/gi18n.h>
 
 #define APPLET_FACTORY "UptimeAppletFactory"
 #define APPLET_ID "UptimeApplet"
@@ -46,10 +45,11 @@ enum {
 };
 
 typedef struct {
-        MatePanelApplet *applet;
-        GtkWidget *vbox, *label_top, *label_bottom;
+	MatePanelApplet *applet;
+	//GtkWidget *event_box;
+	GtkWidget *vbox, *label_top, *label_bottom;
 	int uptime, format;
-        GtkDialog *about, *settings;
+	GtkDialog *about, *settings;
 	GSettings *gsettings;
 } UptimeApplet;
 
@@ -57,8 +57,8 @@ void about_cb (GtkAction *, UptimeApplet *);
 void settings_cb (GtkAction *, UptimeApplet *);
 
 static const GtkActionEntry applet_menu_actions [] = {
-	{ "Properties", GTK_STOCK_PROPERTIES, NULL, NULL, NULL, G_CALLBACK (settings_cb) },
-	{ "About", GTK_STOCK_ABOUT, NULL, NULL, NULL, G_CALLBACK (about_cb) }
+	{ "Properties", GTK_STOCK_PROPERTIES, N_("Settings"), NULL, NULL, G_CALLBACK (settings_cb) },
+	{ "About", GTK_STOCK_ABOUT, N_("About"), NULL, NULL, G_CALLBACK (about_cb) }
 };
 
 static char *ui  =
