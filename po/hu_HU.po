@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mate-applet-uptime 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-03 16:36+0200\n"
-"PO-Revision-Date: 2013-12-15 12:31+0100\n"
+"PO-Revision-Date: 2016-01-03 19:46+0100\n"
 "Last-Translator: rezso <rezso@rezso.net>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: src/applet.h:61
 msgid "About"
-msgstr ""
+msgstr "Névjegy"
 
 #: src/menu.c:45
 msgid "An applet that shows the system uptime"
@@ -31,7 +31,7 @@ msgstr "Válassza ki a megjelenítési formát"
 
 #: src/menu.c:48
 msgid "Home page"
-msgstr ""
+msgstr "Weboldal"
 
 #: src/applet.h:60
 msgid "Settings"
@@ -63,7 +63,7 @@ msgstr "perc"
 
 #: src/menu.c:43
 msgid "translator-credits"
-msgstr ""
+msgstr "Páder Rezső <rezso@rezso.net>"
 
 #: src/main.c:168
 msgid "uptime"
