@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.66])
-AC_INIT([mate-applet-uptime], [0.1.0], [assen.totin@gmail.com])
+AC_INIT([mate-applet-uptime], [0.1.1], [assen.totin@gmail.com])
 
 AM_INIT_AUTOMAKE([-Wall])
 
