@@ -35,10 +35,12 @@ void about_cb (GtkAction *action, UptimeApplet *applet) {
 
 	gtk_about_dialog_set_version (GTK_ABOUT_DIALOG(about), VERSION);
 
-	gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG(about), "Copyleft 2014-1026. See License for details.");
+	gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG(about), "Copyleft 2014-2017. See License for details.");
 
-	const gchar *authors = "Assen Totin <assen.totin@gmail.com>";
-	gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG(about),  &authors);
+	const gchar *authors;
+	authors[0] = "Assen Totin <assen.totin@gmail.com>";
+	authors[1] = NULL;
+	gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG(about),  &authors[0]);
 
 	gtk_about_dialog_set_translator_credits(GTK_ABOUT_DIALOG(about), _("translator-credits"));
 
