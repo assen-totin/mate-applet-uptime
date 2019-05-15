@@ -99,13 +99,15 @@ void format_uptime(UptimeApplet *applet, char *s, char *t) {
 /*
  * Update the applet
  */
-void applet_check_uptime(UptimeApplet *applet) {
+int applet_check_uptime(UptimeApplet *applet) {
 	get_uptime(applet);
 	char uptime[128], tooltip[1024]; 
 
 	format_uptime(applet, &uptime[0], &tooltip[0]);
 	gtk_label_set_markup(GTK_LABEL(applet->label_bottom), &uptime[0]);
 	gtk_widget_set_tooltip_text (GTK_WIDGET (applet->applet), &tooltip[0]);
+	
+	return TRUE;
 }
 
 /* The "main" function
